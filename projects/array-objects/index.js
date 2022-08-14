@@ -43,39 +43,15 @@ function map(array, fn) {
    reduce([1, 2, 3], (all, current) => all + current) // 6
  */
 function reduce(array, fn, initial) {
-  let previousValue;
-  for (let i = 0; i < array.length; i++) {
-    if (i === 0 && initial !== undefined) {
-      previousValue = fn(initial, array[i], i, array);
-    } else if (i === 0 && initial === undefined) {
-      previousValue = array[i];
-    } else {
-      previousValue = fn(previousValue, array[i], i, array);
-    }
-    fn(previousValue, array[i], i, array);
+  const hasInitial = typeof initial !== 'undefined';
+  let previousValue = hasInitial ? initial : array[0];
+
+  for (let i = hasInitial ? 0 : 1; i < array.length; i++) {
+    previousValue = fn(previousValue, array[i], i, array);
+    // fn(previousValue, array[i], i, array)
   }
-  console.log(previousValue);
   return previousValue;
 }
-// for (let i=0; i < array.length; i++){
-//   let previousValue = 0;
-//   if(i === 0) {
-//     previousValue = fn(initial, array[i], i, array)
-//   } else {
-//     previousValue = fn( previousValue ? previousValue : array[i], array[i], i, array );
-//     fn( previousValue, array[i], i, array)
-//   }
-// }
-// return fn();
-// }
-reduce([1, 2, 3], (all, current) => all + current);
-
-// let summ = 0;
-// for (let i=0; i < array.length; i++){
-//   summ += array[i];
-// }
-// return summ + initial;
-// reduce([1, 2, 3], (all, current) => all + current);
 
 /*
  Задание 4:
